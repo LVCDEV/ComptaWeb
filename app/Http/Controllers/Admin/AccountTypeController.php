@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AccountTypeFilterRequest;
 use App\Models\Admin\AccountType;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AccountTypeController extends Controller
@@ -37,8 +36,7 @@ class AccountTypeController extends Controller
      */
     public function store(AccountTypeFilterRequest $request) : RedirectResponse
     {
-        $data = $request->validated();
-        $accounttype = AccountType::create($data);
+        AccountType::create($request->validated());
 
         return redirect()->route('admin.accounttypes.index')->with('success', 'Account Type Created Successfully');
     }
@@ -58,8 +56,7 @@ class AccountTypeController extends Controller
      */
     public function update(AccountTypeFilterRequest $request, AccountType $accounttype) : RedirectResponse
     {
-        $data = $request->validated();
-        $accounttype->update($data);
+        $accounttype->update($request->validated());
 
         return redirect()->route('admin.accounttypes.index')->with('success', 'Account Type Updated Successfully');
     }

@@ -6,7 +6,7 @@
     $input_class ??= null;
     $name ??= '';
     $value ??= '';
-    $icon ??= null;
+    $icon ??= '';
 @endphp
 
 <div @class(["input-group", "mb-3", $div_class])>
