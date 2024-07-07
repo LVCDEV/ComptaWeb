@@ -9,25 +9,22 @@
             Add</a>
     </div>
     <div class="table-responsive mt-5">
-        <table class="table table-striped table-hover table-primary">
+        <table class="table table-striped table-bordered table-hover table-primary">
             <thead class="table-light">
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Number</th>
-                <th scope="col">Type</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Balance</th>
-                <th class="text-end">Actions</th>
+                <th class="text-center" scope="col">Number</th>
+                <th class="text-center" scope="col">Type</th>
+                <th class="text-center" scope="col">Balance</th>
+                <th class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
             @foreach($accounts as $account)
                 <tr>
-                    <th scope="row">{{ $account->id }}</th>
                     <td>{{ $account->number }}</td>
                     <td>{{ $account->accounttype->name }}</td>
-                    <td>{{ $account->user->name }} {{ $account->user->firstname }}</td>
-                    <td>{{ number_format($account->balance, 2, decimal_separator: ',', thousands_separator: ' ') }} €</td>
+                    <td class="text-end">{{ number_format($account->balance, 2, decimal_separator: ',', thousands_separator: ' ')
+                     }} €</td>
                     <td>
                         <div class="d-flex gap-2 w-100 justify-content-end">
                             <a href="{{ route('app.accounts.show', ['account' => $account->id]) }}" class="btn btn-primary btn-sm"><i class="bi bi-postcard"></i> More</a>

@@ -83,12 +83,12 @@ namespace App\Models\Admin{
  * @property string|null $phone
  * @property string|null $email
  * @property string|null $website
+ * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Account> $accounts
  * @property-read int|null $accounts_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Admin\User> $users
- * @property-read int|null $users_count
+ * @property-read \App\Models\Admin\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank query()
@@ -103,6 +103,7 @@ namespace App\Models\Admin{
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bank wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Bank whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereZipcode($value)
  * @mixin \Eloquent
@@ -153,6 +154,8 @@ namespace App\Models\Admin{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Account> $accounts
  * @property-read int|null $accounts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Admin\Bank> $banks
+ * @property-read int|null $banks_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
@@ -219,7 +222,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Account|null $account
- * @property-read \App\Models\Admin\TransactionType|null $transactiontype
+ * @property-read \App\Models\Admin\TransactionType|null $transaction_type
  * @property-read \App\Models\Admin\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()

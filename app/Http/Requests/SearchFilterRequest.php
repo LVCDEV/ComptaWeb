@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AccountFilterRequest extends FormRequest
+class SearchFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +22,8 @@ class AccountFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => ['required', 'numeric', 'min:9'],
-            'account_type_id' => ['required', 'exists:account_types,id'],
-            'user_id' => ['required', 'exists:users,id'],
-            'bank_id' => ['required', 'exists:banks,id'],
-            'balance' => ['required'],
+            'account_id' => ['nullable'],
+            'transaction_type_id' => ['nullable'],
         ];
-    }
-
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => auth()->user()->id,
-        ]);
     }
 }

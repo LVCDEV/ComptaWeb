@@ -4,8 +4,8 @@
 
 @section('content')
     <h1>{{ $transaction->exists ? __('transactions.page_title_edit') : __('transactions.page_title_create') }}</h1>
-    <form action="{{ route($transaction->exists ? 'app.transactions.update' : 'app.transactions.store', ['transaction' =>
-    $transaction]) }}" method="POST" class="vstack m-5">
+    <form action="{{ route($transaction->exists ? 'app.transactions.update' : 'app.transactions.store_transfert',
+    ['transaction' => $transaction]) }}" method="POST" class="vstack m-5">
         @csrf
         @method($transaction->id ? "PATCH" : "POST")
         <div class="row mt-5">
@@ -13,35 +13,14 @@
                 @include('shared.input', ['icon' => 'bi bi-calendar3', 'type' => 'date', 'name' => 'date',
                 'value' => $transaction->date])
             </div>
-            <div class="col-4">
-                <div class="form-floating mb-3">
-                    <select class="form-select" name="transaction_type_id" id="transaction_type_id">
-                        <option  selected></option>
-                        <@foreach ($transactiontypes as $transactiontype)
-                             @if($transactiontype->id != 3)
-                                <option @selected(old('transaction_type_id', $transaction->transaction_type_id) ==
-                                $transactiontype->id) value="{{ $transactiontype->id }}">{{ $transactiontype->name }}
-                                </option>
-                             @endif
-                        @endforeach
-                    </select>
-                    <label for="transaction_type_id">{{ __('transactions.transaction_type_label') }}</label>
-                    @error('transaction_type_id')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-            </div>
         </div>
         <div class="row align-content-between align-items-center">
             <div class="col-4">
                 @include('shared.select', ['label' => __('transactions.issuing_account_label'), 'name' => 'account_id', 'select_value' =>
                 $transaction->account_id, 'option_values' => $accounts, 'option_value_text' => 'number'])
             </div>
-            <div class="col ms-5">
-                @include('shared.input', ['label' => __('transactions.beneficiary_label'), 'type' => 'text', 'name' =>
-                'beneficiary', 'value' => $transaction->beneficiary])
+            <div class="col-4">
+                @include('shared.select', ['label' => __('transactions.transactions.receiving_account_label'), 'name' => 'beneficiary', 'select_value' => $transaction->account_id, 'option_values' => $accounts, 'option_value_text' => 'number'])
             </div>
         </div>
         <div class="row">

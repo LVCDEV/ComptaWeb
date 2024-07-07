@@ -28,8 +28,6 @@
                 'option_values' => $banks, 'option_value_text' => 'name'])
             </div>
         </div>
-        @include('shared.select', ['label' => 'Select user', 'name' => 'user_id', 'select_value' => $account->user_id, 'option_values' => $users, 'option_value_text' => 'name'])
-
         <div class="pt-5">
             <button class="btn btn-success">
                 @if ($account->id)

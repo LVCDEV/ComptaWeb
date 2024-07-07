@@ -8,7 +8,6 @@ use App\Models\Admin\AccountType;
 use App\Models\Admin\Bank;
 use App\Models\Admin\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AccountController extends Controller
@@ -19,7 +18,7 @@ class AccountController extends Controller
     public function index() : View
     {
         return view('account.index', [
-            'accounts' => Account::paginate(25),
+            'accounts' => Account::where('user_id', auth()->user()->id)->paginate(25),
         ]);
     }
 
@@ -42,8 +41,7 @@ class AccountController extends Controller
      */
     public function store(AccountFilterRequest $request) : RedirectResponse
     {
-        $data = $request->validated();
-        $account = Account::create($data);
+        Account::create($request->validated());
 
         return redirect(route('app.accounts.index'))->with('success', 'Account created successfully');
     }
@@ -79,8 +77,7 @@ class AccountController extends Controller
      */
     public function update(AccountFilterRequest $request, Account $account) : RedirectResponse
     {
-        $data = $request->validated();
-        $account->update($data);
+        $account->update($request->validated());
 
         return redirect(route('app.accounts.index'))->with('success', 'Account updated successfully');
     }

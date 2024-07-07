@@ -6,7 +6,7 @@
     $input_class ??= null;
     $name ??= '';
     $value ??= '';
-    $icon ??= null;
+    $icon ??= '';
     $step ??= 1;
 @endphp
 
