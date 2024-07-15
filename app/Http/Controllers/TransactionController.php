@@ -6,6 +6,7 @@ use App\Http\Requests\SearchFilterRequest;
 use App\Http\Requests\TransactionFilterRequest;
 use App\Http\Requests\TransfertFilterRequest;
 use App\Models\Account;
+use App\Models\Admin\Amount;
 use App\Models\Admin\TransactionType;
 use App\Models\Admin\User;
 use App\Models\Transaction;
@@ -49,6 +50,40 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function create(): View
+    {
+        $transaction = new Transaction();
+        return view('transaction.form', [
+            'transaction' => $transaction,
+            'transactiontypes' => TransactionType::all(),
+            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
+            'users' => User::all(),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TransactionFilterRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        $amount = $data['amount'];
+        $type = TransactionType::where('id', $data['transaction_type_id'])->first();
+        $data['amount'] = $amount * $type->coef;
+        $transaction = Transaction::create($request->validated());
+        $amount = Amount::where('account_id', $transaction->account_id)->first();
+        $amount->update([
+            'value' => $amount->value - $transaction->amount,
+        ]);
+        return redirect(route('app.transactions.index', [
+            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
+            'transactiontypes' => TransactionType::all(),
+        ]))->with('success', 'Transaction created successfully');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create_transfert(): View
     {
         $transaction = new Transaction();
@@ -63,43 +98,28 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransactionFilterRequest $request): RedirectResponse
-    {
-        Transaction::create($request->validated());
-        return redirect(route('app.transactions.index', [
-            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
-            'transactiontypes' => TransactionType::all(),
-        ]))->with('success', 'Transaction created successfully');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-        $transaction = new Transaction();
-        return view('transaction.form', [
-            'transaction' => $transaction,
-            'transactiontypes' => TransactionType::all(),
-            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
-            'users' => User::all(),
-            ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store_transfert(TransfertFilterRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $dest = $data['beneficiary'];
         $expe = $data['account_id'];
         $amount = $data['amount'];
-        Transaction::create($data);
+        $type = TransactionType::where('id', $data['transaction_type_id'])->first();
+        $data['amount'] = $amount * $type->coef;
+        $transaction_issuer = Transaction::create($data);
         $data['account_id'] = $dest;
         $data['beneficiary'] = $expe;
-        $data['amount'] = $amount * -1;
-        Transaction::create($data);
+        $type = TransactionType::where('id', $data['transaction_type_id'])->first();
+        $data['amount'] = $amount * $type->coef * -1;
+        $transaction_beneficiary = Transaction::create($data);
+        $amount_issuer = Amount::where('account_id', $transaction_issuer->account_id)->first();
+        $amount_issuer->update([
+            'value' => $amount_issuer->value + $transaction_issuer->amount,
+        ]);
+        $amount_beneficiary = Amount::where('account_id', $transaction_beneficiary->account_id)->first();
+        $amount_beneficiary->update([
+            'value' => $amount_beneficiary->value + $transaction_beneficiary->amount,
+        ]);
         return redirect(route('app.transactions.index', [
             'accounts' => Account::where('user_id', auth()->user()->id)->get(),
             'transactiontypes' => TransactionType::all(),

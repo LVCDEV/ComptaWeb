@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.48.14.
+ * Generated for Laravel 10.48.16.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13424,7 +13424,7 @@ namespace Illuminate\Support\Facades {
                     /**
          * 
          *
-         * @see \LaravelLang\Routes\ServiceProvider::boot()
+         * @see \LaravelLang\Routes\ServiceProvider::registerGroup()
          * @param \Closure $callback
          * @static 
          */        public static function localizedGroup($callback)
@@ -18164,7 +18164,7 @@ namespace Illuminate\Routing {
                     /**
          * 
          *
-         * @see \LaravelLang\Routes\ServiceProvider::boot()
+         * @see \LaravelLang\Routes\ServiceProvider::registerGroup()
          * @param \Closure $callback
          * @static 
          */        public static function localizedGroup($callback)

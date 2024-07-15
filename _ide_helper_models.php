@@ -24,6 +24,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Admin\AccountType|null $accountType
+ * @property-read \App\Models\Admin\Amount|null $amount
  * @property-read \App\Models\Admin\Bank|null $bank
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
  * @property-read int|null $transactions_count
@@ -73,6 +74,30 @@ namespace App\Models\Admin{
  * 
  *
  * @property int $id
+ * @property int|null $account_id
+ * @property float $value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Account|null $account
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount whereAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Amount whereValue($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperAmount {}
+}
+
+namespace App\Models\Admin{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name
  * @property string|null $advise
  * @property string|null $advise_phone
@@ -110,6 +135,30 @@ namespace App\Models\Admin{
  */
 	#[\AllowDynamicProperties]
 	class IdeHelperBank {}
+}
+
+namespace App\Models\Admin{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\Admin\SettingFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereValue($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperSetting {}
 }
 
 namespace App\Models\Admin{

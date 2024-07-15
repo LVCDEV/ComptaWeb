@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin\Setting;
 use App\Models\Admin\TransactionType;
 use App\Models\Admin\UserType;
 use App\Models\Admin\User;
@@ -57,5 +58,14 @@ class DatabaseSeeder extends Seeder
             'coef' => -1,
         ]);
 
+        Setting::factory()->create([
+            'name' => 'max_gauge',
+            'value' => 5000,
+        ]);
+
+        Setting::factory()->create([
+            'name' => 'min_gauge',
+            'value' => -500,
+        ]);
     }
 }

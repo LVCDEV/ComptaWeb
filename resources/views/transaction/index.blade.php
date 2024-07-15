@@ -16,7 +16,7 @@
                 <div class="col-3">
                     <div class="form-floating mb-3">
                         <select class="form-select" name="account_id" id="account_id">
-                            <option  selected></option>
+                            <option selected></option>
                             <@foreach ($accounts as $account)
                                 <option value="{{ $account->id }}">{{ $account->number }}</option>
                             @endforeach
@@ -27,7 +27,7 @@
                 <div class="col-3">
                     <div class="form-floating mb-3">
                         <select class="form-select" name="transaction_type_id" id="transaction_type_id">
-                            <option  selected></option>
+                            <option selected></option>
                             <@foreach ($transactiontypes as $transactiontype)
                                 <option value="{{ $transactiontype->id }}">{{ $transactiontype->name }}</option>
                             @endforeach
@@ -68,13 +68,19 @@
                     <td class="text-center">{{ $transaction->date }}</td>
                     <td>{{ $transaction->transaction_type->name }}</td>
                     <td class="text-center">{{ $transaction->account->number }}</td>
-                    <td>{{ $transaction->beneficiary }}</td>
+                    @if($transaction->transaction_type_id !== 3)
+                        <td>{{ $transaction->beneficiary }}</td>
+                    @else
+                        <td class="text-center">{{ $accounts->where('id', $transaction->beneficiary)->first()->number }}</td>
+                    @endif
                     <td>{{ $transaction->description }}</td>
-                    <td class="text-end">{{ number_format($transaction->amount, 2, decimal_separator: ',', thousands_separator: ' ')
-                    }} €</td>
+                    <td class="text-end">{{ number_format($transaction->amount, 2, decimal_separator: ',', thousands_separator:
+                     ' ') }} €
+                    </td>
                     <td>
                         <div class="d-flex gap-2 w-100 justify-content-center">
-                            <a href="{{ route('app.transactions.edit', ['transaction' => $transaction->id]) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <a href="{{ route('app.transactions.edit', ['transaction' => $transaction->id]) }}"
+                               class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                             <form action="{{ route('app.transactions.destroy', $transaction) }}" method="post">
                                 @csrf
                                 @method('delete')

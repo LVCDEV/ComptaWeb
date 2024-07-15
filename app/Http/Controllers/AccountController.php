@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AccountFilterRequest;
 use App\Models\Account;
 use App\Models\Admin\AccountType;
+use App\Models\Admin\Amount;
 use App\Models\Admin\Bank;
 use App\Models\Admin\User;
 use Illuminate\Http\RedirectResponse;
@@ -19,6 +20,7 @@ class AccountController extends Controller
     {
         return view('account.index', [
             'accounts' => Account::where('user_id', auth()->user()->id)->paginate(25),
+            'amounts' => Amount::all(),
         ]);
     }
 
@@ -41,7 +43,12 @@ class AccountController extends Controller
      */
     public function store(AccountFilterRequest $request) : RedirectResponse
     {
-        Account::create($request->validated());
+
+        $account = Account::create($request->validated());
+        Amount::create([
+            'account_id' => $account->id,
+            'value' => $account->balance,
+        ]);
 
         return redirect(route('app.accounts.index'))->with('success', 'Account created successfully');
     }

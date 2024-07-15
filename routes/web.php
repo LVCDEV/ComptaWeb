@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,12 +24,15 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/app')->controller(AppController::class)->name('app.')->group(function () {
     Route::resource('/', AppController::class)->only(['index']);
     Route::resource('/accounts', AccountController::class)->middleware(['auth']);
-    Route::resource('/transactions', TransactionController::class)->middleware(['auth'])->except(['show']);
+    Route::resource('/transactions', TransactionController::class)->except(['show'])->middleware(['auth']);
+    Route::resource('/tests', TestController::class)->only('index')->middleware(['auth']);
 });
 
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::post('/login', [AuthController::class, 'doLogin']);
-Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::prefix('/auth')->name('auth.')->controller(AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'doLogin');
+    Route::delete('/logout', 'logout')->name('logout');
+});
 
 Route::prefix('/admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::resource('/users', UserController::class)->except(['show']);

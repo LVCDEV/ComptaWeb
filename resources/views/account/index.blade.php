@@ -23,12 +23,14 @@
                 <tr>
                     <td>{{ $account->number }}</td>
                     <td>{{ $account->accounttype->name }}</td>
-                    <td class="text-end">{{ number_format($account->balance, 2, decimal_separator: ',', thousands_separator: ' ')
+                    <td class="text-end">{{ number_format($amounts->where('id', $account->id)->first()->value, 2, decimal_separator:
+                    ',',
+                    thousands_separator: ' ')
                      }} €</td>
                     <td>
                         <div class="d-flex gap-2 w-100 justify-content-end">
                             <a href="{{ route('app.accounts.show', ['account' => $account->id]) }}" class="btn btn-primary btn-sm"><i class="bi bi-postcard"></i> More</a>
-                            <a href="{{ route('app.accounts.edit', ['account' => $account->id]) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                            {{--<a href="{{ route('app.accounts.edit', ['account' => $account->id]) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>--}}
                             <form action="{{ route('app.accounts.destroy', $account) }}" method="post">
                                 @csrf
                                 @method('delete')

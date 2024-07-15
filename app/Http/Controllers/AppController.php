@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
+use App\Models\Admin\Amount;
+use App\Models\Admin\Setting;
 use Illuminate\View\View;
 
 class AppController extends Controller
@@ -11,6 +14,10 @@ class AppController extends Controller
      */
     public function index() : View
     {
-        return view('welcome');
+        return view('welcome', [
+            'accounts' => Account::all(),
+            'amounts' => Amount::all(),
+            'settings' => Setting::all(),
+        ]);
     }
 }
