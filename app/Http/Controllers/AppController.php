@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Admin\AccountType;
 use App\Models\Admin\Amount;
 use App\Models\Admin\Setting;
 use Illuminate\View\View;
@@ -18,6 +19,7 @@ class AppController extends Controller
             'accounts' => Account::all(),
             'amounts' => Amount::all(),
             'settings' => Setting::all(),
+            'accounttypes' => AccountType::all(),
         ]);
     }
 }

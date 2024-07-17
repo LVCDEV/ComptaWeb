@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin\AccountType;
 use App\Models\Admin\Setting;
 use App\Models\Admin\TransactionType;
 use App\Models\Admin\UserType;
@@ -36,6 +37,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'lefebvre-v@laposte.net',
             'password' => Hash::make('Lefebvre-v.76'),
             'user_type_id' => UserType::where('id', 1)->value('id'),
+        ]);
+
+        AccountType::factory()->create([
+            'name' => 'Compte courant',
+        ]);
+
+        AccountType::factory()->create([
+            'name' => 'Livret',
         ]);
 
         TransactionType::factory()->create([

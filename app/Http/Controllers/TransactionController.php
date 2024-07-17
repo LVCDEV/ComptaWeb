@@ -6,6 +6,7 @@ use App\Http\Requests\SearchFilterRequest;
 use App\Http\Requests\TransactionFilterRequest;
 use App\Http\Requests\TransfertFilterRequest;
 use App\Models\Account;
+use App\Models\Admin\AccountType;
 use App\Models\Admin\Amount;
 use App\Models\Admin\TransactionType;
 use App\Models\Admin\User;
@@ -156,6 +157,11 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction): RedirectResponse
     {
+
+        $amount = Amount::where('account_id', $transaction->account_id)->first();
+        $amount->update([
+            'value' => $amount->value - $transaction->amount,
+        ]);
         $transaction->delete();
         return redirect(route('app.transactions.index', [
             'accounts' => Account::where('user_id', auth()->user()->id)->get(),
