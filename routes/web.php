@@ -21,11 +21,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/app')->controller(AppController::class)->name('app.')->group(function () {
-    Route::resource('/', AppController::class)->only(['index']);
-    Route::resource('/accounts', AccountController::class)->middleware(['auth']);
-    Route::resource('/transactions', TransactionController::class)->except(['show'])->middleware(['auth']);
-    Route::resource('/tests', TestController::class)->only('index')->middleware(['auth']);
+Route::prefix('/app')->name('app.')->middleware(['auth'])->group(function () {
+    Route::get('/', [AppController::class, 'index'])->name('index');
+    Route::post('search_account', [AppController::class, 'search_account'])->name('search_account');
+    Route::post('search_transaction', [AppController::class, 'search_transaction'])->name('search_transaction');
+    Route::resource('/accounts', AccountController::class);
+    Route::resource('/transactions', TransactionController::class)->except(['show']);
+    Route::resource('/tests', TestController::class)->only('index');
 });
 
 Route::prefix('/auth')->name('auth.')->controller(AuthController::class)->group(function () {

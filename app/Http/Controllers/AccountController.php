@@ -19,8 +19,7 @@ class AccountController extends Controller
     public function index() : View
     {
         return view('account.index', [
-            'accounts' => Account::where('user_id', auth()->user()->id)->paginate(25),
-            'amounts' => Amount::all(),
+            'accounts' => Account::where('user_id', auth()->user()->id)->with('amount', 'accountType')->paginate(25),
         ]);
     }
 

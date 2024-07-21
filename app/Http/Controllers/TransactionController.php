@@ -16,34 +16,14 @@ use Illuminate\View\View;
 
 class TransactionController extends Controller
 {
-    public function search(SearchFilterRequest $request): View
-    {
-        $data = $request->validated();
-        if (empty($data['account_id'])) {
-            $attribute = 'transaction_type_id';
-            $value = $data['transaction_type_id'];
-        }
-        else
-        {
-            $attribute = 'account_id';
-            $value = $data['account_id'];
-        }
-
-        return view('transaction.index', [
-            'transactions' => Transaction::where($attribute, $value)->paginate(25),
-            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
-            'transactiontypes' => TransactionType::all(),
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
         return view('transaction.index', [
-            'transactions' => Transaction::where('user_id', auth()->user()->id)->paginate(25),
-            'accounts' => Account::where('user_id', auth()->user()->id)->get(),
+            'transactions' => Transaction::where('user_id', auth()->user()->id)->with('account', 'transaction_type')->paginate(25),
+            'accounts' => Account::where('user_id', auth()->user()->id)->with('amount')->get(),
             'transactiontypes' => TransactionType::all(),
         ]);
     }

@@ -22,11 +22,9 @@
             @foreach($accounts as $account)
                 <tr>
                     <td>{{ $account->number }}</td>
-                    <td>{{ $account->accounttype->name }}</td>
-                    <td class="text-end">{{ number_format($amounts->where('id', $account->id)->first()->value, 2, decimal_separator:
-                    ',',
-                    thousands_separator: ' ')
-                     }} €</td>
+                    <td>{{ $account->accountType->name }}</td>
+                    <td class="text-end">{{ number_format($account->amount->value, 2,
+                    decimal_separator:',', thousands_separator: ' ')  }} €</td>
                     <td>
                         <div class="d-flex gap-2 w-100 justify-content-end">
                             <a href="{{ route('app.accounts.show', ['account' => $account->id]) }}" class="btn btn-primary btn-sm"><i class="bi bi-postcard"></i> More</a>

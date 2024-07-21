@@ -13,7 +13,6 @@
 @php
     $routeName = request()->route()->getName();
     $admin = UserType::where('name', 'admin')->value('id');
-    $guest = UserType::where('name', 'user')->value('id');
 @endphp
 @include('navbar')
 <div class="container mt-5">

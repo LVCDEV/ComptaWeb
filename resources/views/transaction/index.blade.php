@@ -9,21 +9,10 @@
             Add</a>
     </div>
     <div class="align-content-center">
-        <form action="{{ route('app.transactions.search') }}" method="POST">
+        <form action="{{ route('app.search_transaction') }}" method="POST">
             @csrf
             @method("POST")
             <div class="row mt-5 mb-5">
-                <div class="col-3">
-                    <div class="form-floating mb-3">
-                        <select class="form-select" name="account_id" id="account_id">
-                            <option selected></option>
-                            <@foreach ($accounts as $account)
-                                <option value="{{ $account->id }}">{{ $account->number }}</option>
-                            @endforeach
-                        </select>
-                        <label for="account_id">{{ __('transactions.transaction_account_label') }}</label>
-                    </div>
-                </div>
                 <div class="col-3">
                     <div class="form-floating mb-3">
                         <select class="form-select" name="transaction_type_id" id="transaction_type_id">

@@ -21,9 +21,7 @@
                 </ul>
                 @auth
                     <hr class="table-group-divider mt-4 mb-4">
-                @endauth
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    @auth
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item dropdown">
                             <a @class(['nav-link', 'dropdown-toggle', 'active' => str_starts_with($routeName, 'app.transactions')]) href="#" role="button" data-bs-toggle="dropdown"
                                aria-expanded="false"><i class="bi bi-bank"></i> Transactions</a>
@@ -39,37 +37,30 @@
                         <li class="nav-item">
                             <a @class(['nav-link', 'active' => str_starts_with($routeName, 'app.accounts.')]) href="{{ route('app.accounts.index') }}"><i class="bi bi-cash-coin"></i> Accounts</a>
                         </li>
-                </ul>
-                <hr class="table-group-divider mt-4 mb-4">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    </ul>
                     @if(Auth::user()->user_type_id === $admin)
-                        <li class="nav-item">
-                            <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.banks.')]) href="{{
-                                    route('admin.banks.index') }}"><i class="bi bi-bank"></i> Banks</a>
-                        </li>
-                        <li class="nav-item">
-                            <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.users')]) href="{{ route('admin.users.index') }}"><i
-                                    class="bi bi-person-fill"></i> Users</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                               aria-expanded="false"><i class="bi bi-gear"></i> Settings</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('admin.accounttypes.index') }}"><i class="bi
-                                bi-file-earmark-binary"></i> Account Types</a></li>
-                            </ul>
-                        </li>
+                        <hr class="table-group-divider mt-4 mb-4">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.banks.')]) href="{{
+                                        route('admin.banks.index') }}"><i class="bi bi-bank"></i> Banks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.users')]) href="{{ route('admin.users.index') }}"><i
+                                        class="bi bi-person-fill"></i> Users</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false"><i class="bi bi-gear"></i> Settings</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('admin.accounttypes.index') }}"><i class="bi
+                                    bi-file-earmark-binary"></i> Account Types</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     @endif
-                    @endauth
-                </ul>
-                <hr class="table-group-divider mt-4 mb-4">
-                <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
-                </form>
-                <hr class="table-group-divider mt-4 mb-4">
-                <div class="navbar-nav">
-                    @auth
+                    <hr class="table-group-divider mt-4 mb-4">
+                    <div class="navbar-nav">
                         @if(Auth::user()->user_type_id == $admin)
                             <p class="nav-link, active"><i class="bi bi-person-fill-gear"></i> {{ Auth::user()->name }}
                             </p>
