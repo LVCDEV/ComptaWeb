@@ -27,7 +27,6 @@ Route::prefix('/app')->name('app.')->middleware(['auth'])->group(function () {
     Route::post('search_transaction', [AppController::class, 'search_transaction'])->name('search_transaction');
     Route::resource('/accounts', AccountController::class);
     Route::resource('/transactions', TransactionController::class)->except(['show']);
-    Route::resource('/tests', TestController::class)->only('index');
 });
 
 Route::prefix('/auth')->name('auth.')->controller(AuthController::class)->group(function () {
